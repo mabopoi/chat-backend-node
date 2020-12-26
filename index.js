@@ -1,11 +1,18 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const authRoutes = require('./routes/auth');
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
   cors: {
     origin: '*',
   },
 });
+
+app.use(bodyParser.json());
+app.use(passport.initialize());
+authRoutes(app);
 
 app.get('/', (req, res) => {
   res.json({ test: "It's working" });
