@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const passport = require('passport');
 const authRoutes = require('./routes/auth');
 const http = require('http').Server(app);
@@ -11,12 +12,15 @@ const io = require('socket.io')(http, {
 });
 
 app.use(bodyParser.json());
+app.use(
+  session({
+    secret: 'secret', //add env variable
+  })
+);
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
+app.use(passport.session());
 authRoutes(app);
-
-app.get('/', (req, res) => {
-  res.json({ test: "It's working" });
-});
 
 io.on('connection', (socket) => {
   io.emit('connection', 'Someone has connected to the chat');
