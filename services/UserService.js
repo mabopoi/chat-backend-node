@@ -1,8 +1,9 @@
 const UserModel = require('../models/UserModel');
 const hashPassword = require('../utils/hashPassword');
 const mongoDB = require('mongoose');
+const config = require('../config');
 
-mongoDB.connect('mongodb://localhost:27017/chat', {
+mongoDB.connect(config.mongoURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

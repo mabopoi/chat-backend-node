@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
+const config = require('../config');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
 const authRoutes = require('./routes/auth');
@@ -12,9 +14,10 @@ const io = require('socket.io')(http, {
 });
 
 app.use(bodyParser.json());
+app.use(cors({ origin: '*', credentials: true }));
 app.use(
   session({
-    secret: 'secret', //add env variable
+    secret: config.cookieSecret, //add env variable
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,4 +35,4 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(3000, () => console.log('Server working'));
+http.listen(config.port, () => console.log('Server working'));
