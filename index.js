@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const config = require('../config');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cors({ origin: '*', credentials: true }));
 app.use(
   session({
-    secret: config.cookieSecret, //add env variable
+    secret: process.env.COOKIE_SECRET, //add env variable
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,4 +35,6 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(config.port, () => console.log('Server working'));
+http.listen(process.env.PORT, () =>
+  console.log(`Server working at port ${process.env.PORT}`)
+);

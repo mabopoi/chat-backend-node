@@ -1,9 +1,8 @@
 const UserModel = require('../models/UserModel');
 const hashPassword = require('../utils/hashPassword');
 const mongoDB = require('mongoose');
-const config = require('../config');
 
-mongoDB.connect(config.mongoURL, {
+mongoDB.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
