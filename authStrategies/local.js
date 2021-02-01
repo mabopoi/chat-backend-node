@@ -17,6 +17,9 @@ passport.use(
     { usernameField: 'email', passReqToCallback: true },
     async (req, email, password, done) => {
       const user = await UserService.getByEmail(email);
+      if (!user) {
+        return done(null, null);
+      }
       bcrypt.compare(password, user.password).then((result) => {
         if (user && result) {
           done(null, user);

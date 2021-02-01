@@ -23,7 +23,7 @@ function authRoutes(app) {
       res.statusCode = 200;
       return res.json(user);
     }
-    res.statusCode = 404;
+    res.statusCode = 401;
     return res.json({ data: 'You are not logged' }).end();
   });
 

@@ -9,15 +9,15 @@ const authRoutes = require('./routes/auth');
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: '*',
+    origin: process.env.ORIGIN,
   },
 });
 
 app.use(bodyParser.json());
-app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({ origin: process.env.ORIGIN, credentials: true }));
 app.use(
   session({
-    secret: process.env.COOKIE_SECRET, //add env variable
+    secret: process.env.COOKIE_SECRET,
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
