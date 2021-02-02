@@ -14,7 +14,10 @@ function authRoutes(app) {
   });
 
   router.post('/sign-in', passport.authenticate('local'), (req, res) => {
-    res.sendStatus(200);
+    const { name, email } = req.user;
+    const loggedUser = { user: { name, email } };
+    res.statusCode = 200;
+    return res.json(loggedUser);
   });
 
   router.get('/verify', (req, res) => {
